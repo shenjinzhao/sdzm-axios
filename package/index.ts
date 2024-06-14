@@ -1,15 +1,10 @@
-import axios from "axios";
+import axios, { CreateAxiosDefaults } from "axios";
 import { useServiceConfig } from "./interceptors";
 import { initQuery } from "./httpRequest";
 
-export interface Config {
-  baseURL: string;
-  timeout?: number;
-}
-
-export function create(config: Config) {
-  const service = axios.create();
+export function create(config: CreateAxiosDefaults) {
+  const service = axios.create(config);
   const insertPrefix = initQuery(service);
-  useServiceConfig(service, config);
+  useServiceConfig(service);
   return { service, insertPrefix };
 }
