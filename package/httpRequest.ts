@@ -49,43 +49,31 @@ class HttpRequestBase {
 class HttpRequest extends HttpRequestBase {
   insertPrefix = (prefix: string) => {
     const getUrl = (url: string) => `${prefix ? prefix + "/" + url : url}`;
-    function get<T>(
-      this: HttpRequest,
+    const get = <T>(
       url: string,
       data: IParams = {},
       config?: RequestConfig
-    ): Promise<T> {
-      return this.httpGet(getUrl(url), data, config || {});
-    }
-    function post<T>(
-      this: HttpRequest,
+    ): Promise<T> => this.httpGet(getUrl(url), data, config || {});
+    const post = <T>(
       url: string,
       data: IParams = {},
       config?: RequestConfig
-    ): Promise<T> {
-      return this.httpPost(getUrl(url), data, config || {});
-    }
-    function put<T>(
-      this: HttpRequest,
+    ): Promise<T> => this.httpPost(getUrl(url), data, config || {});
+    const put = <T>(
       url: string,
       data: IParams = {},
       config?: RequestConfig
-    ): Promise<T> {
-      return this.httpPut(getUrl(url), data, config || {});
-    }
-    function del<T>(
-      this: HttpRequest,
+    ): Promise<T> => this.httpPut(getUrl(url), data, config || {});
+    const del = <T>(
       url: string,
       data: IParams = {},
       config?: RequestConfig
-    ): Promise<T> {
-      return this.httpDel(getUrl(url), data, config || {});
-    }
+    ): Promise<T> => this.httpDel(getUrl(url), data, config || {});
     return {
-      get: get.bind(this),
-      post: post.bind(this),
-      put: put.bind(this),
-      del: del.bind(this),
+      get,
+      post,
+      put,
+      del,
     } as const;
   };
 }
